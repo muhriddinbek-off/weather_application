@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:fontfamily_example/data/view_model/provider_model.dart';
-import 'package:provider/provider.dart';
-import 'ui/home_screen.dart';
+import 'package:fontfamily_example/resources/shorts.dart';
 
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => ProviderWeather(),
+      create: (context) => ProviderModel(),
       child: const MyApp(),
     ),
   );

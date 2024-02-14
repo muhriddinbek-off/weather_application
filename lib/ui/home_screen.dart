@@ -1,42 +1,44 @@
-import 'package:flutter/material.dart';
-import 'package:fontfamily_example/data/view_model/provider_model.dart';
-import 'package:provider/provider.dart';
+import 'package:fontfamily_example/resources/shorts.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    context.read<ProviderModel>().getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backroundAppColor,
       appBar: AppBar(
+        backgroundColor: AppColors.backroundAppColor,
         centerTitle: true,
-        title: const Text('Weather App'),
+        title: Text('Weather App', style: AppStyles.getAppBarStyle()),
       ),
       body: Column(
         children: [
-          Consumer<ProviderWeather>(
+          Consumer<ProviderModel>(
             builder: (context, value, child) {
-              if (value.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+              if (value.data.isEmpty) {
+                return const IsLoading();
               }
-              if (value.weatherData.isNotEmpty) {
-                return ListTile(
-                  title: Text(value.weatherData[0].location.country),
-                  subtitle: Text(value.weatherData[0].location.name),
-                );
+              if (value.data.isNotEmpty) {
+                return HasData(value: value);
               } else {
-                return const Center(
-                  child: Text('error'),
-                );
+                return Text('data');
               }
             },
-          )
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        context.read<ProviderWeather>().getWeatherData();
-      }),
     );
   }
 }
