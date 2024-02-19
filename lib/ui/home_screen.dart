@@ -1,4 +1,6 @@
+import 'package:fontfamily_example/resources/app_images.dart';
 import 'package:fontfamily_example/resources/shorts.dart';
+import 'package:fontfamily_example/services/weather_api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  WeatherApi weatherApi = WeatherApi();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Consumer<ProviderModel>(
             builder: (context, value, child) {
-              if (value.data.isEmpty) {
-                return const IsLoading();
-              }
+              Future.delayed(const Duration(seconds: 5), () {
+                if (value.data.isEmpty) {
+                  return Center(
+                    child: Image.asset(AppImages.notInternet),
+                  );
+                }
+              });
               if (value.data.isNotEmpty) {
                 return HasData(value: value);
-              } else {
-                return Text('data');
               }
+              return Image.asset(AppImages.notInternet);
             },
           ),
         ],

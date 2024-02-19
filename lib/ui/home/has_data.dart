@@ -8,11 +8,11 @@ class HasData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: value.data[0].forecast.forecastday.length,
+        itemCount: value.data[0].forecast.forecastDay[0].hour.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(
-              value.data[0].forecast.forecastday[index].date,
+              value.data[0].forecast.forecastDay[0].hour[index].time,
               style: AppStyles.getTitleStyle(),
             ),
           );

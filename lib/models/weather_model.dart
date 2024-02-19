@@ -1,3 +1,5 @@
+import 'package:fontfamily_example/models/forcast/forecast.dart';
+
 class WeatherModel {
   Location location;
   Current current;
@@ -10,8 +12,8 @@ class WeatherModel {
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
     return WeatherModel(
       current: Current.fromJson(json['current']),
-      forecast: Forecast.fromJson(json['forecast']),
       location: Location.fromJson(json['location']),
+      forecast: Forecast.formJson(json['forecast']),
     );
   }
 }
@@ -37,32 +39,5 @@ class Current {
     return Current(
       tempC: json['temp_c'],
     );
-  }
-}
-
-class Forecast {
-  final List<ForecastDay> forecastday;
-  Forecast({
-    required this.forecastday,
-  });
-  factory Forecast.fromJson(Map<String, dynamic> json) {
-    List<ForecastDay> forecastData = [];
-    json['forecastday'].forEach((e) {
-      forecastData.add(ForecastDay.fromJson(e));
-    });
-
-    return Forecast(
-      forecastday: List.from(forecastData),
-    );
-  }
-}
-
-class ForecastDay {
-  String date;
-  ForecastDay({
-    required this.date,
-  });
-  factory ForecastDay.fromJson(Map<String, dynamic> json) {
-    return ForecastDay(date: json['date']);
   }
 }
